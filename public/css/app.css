@@ -1,0 +1,6 @@
+.navbar {
+  border-bottom-width: 2px;
+  --border-opacity: 1;
+  border-color: #3182ce;
+  border-color: rgba(49, 130, 206, var(--border-opacity));
+}

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('home');
+
+
+// auth
+Auth::routes();
+Route::get('/dashboard', function () {
+    return redirect()->route(strtolower(Auth::user()->roles) . '.home');
+})->name('dashboard');
+
+
+Route::group([
+    'prefix' => 'worker',
+    'as' => 'worker.'
+], function () {
+    Route::get('/', function () {
+        return redirect('worker/dashboard');
+    });
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
